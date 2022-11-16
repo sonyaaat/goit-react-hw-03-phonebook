@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import css from "../ContactsList/ContactsList.module.css"
 import ContactItem from 'components/ContactItem/ContactItem';
-const ContactsList=({contacts,onDelete})=>{
+const ContactsList=({contacts,onDelete,items})=>{
     return(
-        contacts.length===0?<h2 className={css.notify}>There isn`t such contact</h2>:
+        contacts.length===0 && items.length!==0?<h2 className={css.notify}>There isn`t such contact</h2>:
         <ul className={css.list}>
             {contacts.map(({id,name,number})=>
             <ContactItem key={id}
