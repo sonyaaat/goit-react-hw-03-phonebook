@@ -19,23 +19,25 @@ class App extends Component{
   }
   componentDidUpdate(_,prevState)
   {
-    if(prevState!==this.state)
+    if(prevState.contacts!==this.state.contacts)
     {
       localStorage.setItem(KEY,JSON.stringify(this.state.contacts))
     }
   }
   componentDidMount()
   {
-    
-    const items=JSON.parse(localStorage.getItem(KEY))
-    if(items)
+    const savedItems=localStorage.getItem(KEY)
+    if(savedItems)
     {
+      const items=JSON.parse(savedItems)
       this.setState({contacts:items})
     }
+    
    
   }
   addContact=({name,number})=>{
-    if(this.state.contacts.some(contact=>contact.name.toLowerCase()===name.toLowerCase() ))
+    const isAdded=this.state.contacts.some(contact=>contact.name.toLowerCase()===name.toLowerCase() )
+    if(isAdded)
     {
       Notiflix.Notify.warning(`${name} is already in contacts`);
       return 1;
@@ -64,7 +66,6 @@ class App extends Component{
     this.setState(prevState=>({
       contacts : prevState.contacts.filter(contact=>contact.id!==id)
     }))
-    console.log("G")
   }
   render()
   {
